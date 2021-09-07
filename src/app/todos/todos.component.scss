@@ -2,8 +2,6 @@
   width: 300px;
   margin: 0 auto;
 
-  text-align: center;
-
   h1{
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
@@ -11,13 +9,54 @@
     color: rgba(0,0,0,0.1) ;
   }
 
-  input{
+  .input-for-word{
     width: 250px;
     height: 25px;
 
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
     border: none;
 
     box-shadow: 0 0 2px black;
   }
+  .todo-list-container{
+    width: 254px;
+
+    box-shadow: 0 0 2px black;
+
+    border-radius: 0 0 8px 8px;
+
+    .todo-list{
+      font-size: 18px;
+      font-family: Arial, Helvetica, sans-serif;
+
+      display: flex;
+
+      padding: .3em;
+    }
+    button{
+      margin-left: auto;
+    }
+  }
+}
+.todo-complete {
+  text-decoration: line-through;
+}
+.remove-button{
+  margin: 1em;
+  padding: .3em .5em;
+
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+
+  border-radius: 8px;
+  border: none;
+
+  background: #c0c0c0;
+
+}
+.remove-button:hover{
+  background: grey;
+}
+form{
+  width: 450px;
 }

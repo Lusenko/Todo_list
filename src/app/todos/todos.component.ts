@@ -11,19 +11,33 @@ import {Todo} from "../todo";
 })
 export class TodosComponent implements OnInit {
 
-  formGrup: FormGroup;
+  formGroup: FormGroup;
   todos$?: Observable<Todo[]>
 
   constructor(private formBuilder: FormBuilder, private todoService: ServiceService) {
-    this.formGrup = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
+      check: [false],
       value: ['', Validators.required]
     })
   }
 
   add(){
-    this.todoService.createList(this.formGrup.value);
-    this.formGrup.get('value')?.setValue('');
+    this.todoService.createList(this.formGroup.value);
+    this.formGroup.get('value')?.setValue('');
   }
+
+  remove(todoId: number){
+    this.todoService.removeList(todoId);
+  }
+
+  check(id: number){
+    this.todoService.checkList(id);
+  }
+
+  deleteSelect(){
+    this.todoService.deleteSelectedList();
+  }
+
   ngOnInit(): void {
     this.todos$ = this.todoService.todos$;
   }

@@ -34,9 +34,9 @@ export class ServiceService {
   }
 
   removeList(id: number){
-    this.todos.forEach((todo, item) => {
+    this.todos.forEach((todo, index) => {
       if (todo.id === id) {
-        this.todos.splice(item, 1);
+        this.todos.splice(index, 1);
       }
       this._todo.next(this.todos);
     });
@@ -45,7 +45,7 @@ export class ServiceService {
   checkList(id:number){
     this.todos.forEach(item => {
       if(item.id === id){
-        if(item.check === true){
+        if(item.check){
           item.check = false;
         }else{
           item.check = true;
@@ -55,12 +55,14 @@ export class ServiceService {
     })
   }
 
-  deleteSelectedList(){
-    for(let i = (this.todos.length - 1); i > -1; i--){
-      if(this.todos[i].check){
-        this.todos.splice(i, 1);
-      }
-    }
+  showAll(){
     this._todo.next(this.todos);
+    console.log(this.todos);
+  }
+  showDone() {
+    this._todo.next(this.todos.filter(item => item.check));
+  }
+  showNotDone(){
+    this._todo.next(this.todos.filter(item => !item.check));
   }
 }

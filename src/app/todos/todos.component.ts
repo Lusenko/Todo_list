@@ -11,6 +11,7 @@ import {Todo} from "../todo";
 })
 export class TodosComponent implements OnInit {
 
+  radioStatus!: boolean;
   formGroup: FormGroup;
   todos$?: Observable<Todo[]>
 
@@ -20,6 +21,7 @@ export class TodosComponent implements OnInit {
       value: ['', Validators.required]
     })
   }
+
 
   add(){
     this.todoService.createList(this.formGroup.value);
@@ -34,10 +36,17 @@ export class TodosComponent implements OnInit {
     this.todoService.checkList(id);
   }
 
-  deleteSelect(){
-    this.todoService.deleteSelectedList();
+  showAllItem(){
+    this.todoService.showAll()
   }
 
+  showDoneItem(){
+    this.todoService.showDone()
+  }
+
+  showNotDoneItem(){
+    this.todoService.showNotDone()
+  }
   ngOnInit(): void {
     this.todos$ = this.todoService.todos$;
   }

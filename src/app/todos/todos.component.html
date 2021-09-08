@@ -2,7 +2,17 @@
   <form [formGroup]="formGroup">
     <h1>Todo</h1>
     <input class="input-for-word" type="text"  name="value" formControlName="value" (keyup.enter)="add()">
-    <button class="remove-button" (click)="deleteSelect()">Click</button>
+    <div class="block-with-radio">
+      <label>
+        <input type="radio" (click)="showAllItem()" name="show-item"> Show All
+      </label>
+      <label>
+        <input type="radio" (click)="showDoneItem()" name="show-item"> Done
+      </label>
+      <label>
+        <input type="radio" (click)="showNotDoneItem()" name="show-item"> Not Done
+      </label>
+    </div>
   </form>
   <div class="todo-list-container">
     <div *ngFor="let todo of (todos$ | async), let indexOfEl = index" class="todo-list">

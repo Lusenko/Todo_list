@@ -3,7 +3,7 @@ import {Todo} from "./todo";
 import {BehaviorSubject} from "rxjs";
 import {StorageService} from "./storage.service";
 
-//const storageKay = 'Todo_List';
+const storageKey = 'Todo_List';
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +18,22 @@ export class ServiceService {
   private todos: Todo[] = [];
   private next_id = 0;
 
-  constructor(/*private storageService: StorageService*/) {
-    /*this.todos$ = storageService.getData(storageKay)*/
+  constructor(private storageService: StorageService) {
+    this._todo.next(storageService.getData(storageKey));
   }
 
-  /*saveList(){
-    this.storageService.setData(storageKay, this.todos$);
-  }*/
+  saveList(){
+    this.storageService.setData(storageKey, this.todos);
+  }
+
+
 
   createList(item: Todo){
     const cloneItem = {...item};
     item.id = ++this.next_id;
     this.todos = [...this.todos, item];
     this._todo.next(this.todos);
+    this.saveList();
   }
 
   removeList(id: number){
@@ -40,6 +43,7 @@ export class ServiceService {
       }
       this._todo.next(this.todos);
     });
+    this.saveList();
   }
 
   checkList(id:number){
@@ -53,16 +57,19 @@ export class ServiceService {
       }
       this._todo.next(this.todos);
     })
+    this.saveList();
   }
 
   showAll(){
     this._todo.next(this.todos);
-    console.log(this.todos);
+    this.saveList();
   }
   showDone() {
     this._todo.next(this.todos.filter(item => item.check));
+    this.saveList();
   }
   showNotDone(){
     this._todo.next(this.todos.filter(item => !item.check));
+    this.saveList();
   }
 }

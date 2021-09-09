@@ -10,8 +10,6 @@ const storageKey = 'Todo_List';
 })
 export class ServiceService {
 
-
-
   private _todo = new BehaviorSubject<Todo[]>([]);
   readonly todos$ = this._todo.asObservable();
 
@@ -19,23 +17,24 @@ export class ServiceService {
   private next_id = 0;
 
   constructor(private storageService: StorageService) {
-    this._todo.next(storageService.getData(storageKey));
+    let data = storageService.getData(storageKey);
+    this._todo.next(data);
+    this.todos = data;
   }
 
   saveList(){
     this.storageService.setData(storageKey, this.todos);
   }
 
-  returnTodoList(): Todo[]{
-    this._todo.next(this.todos);
-    return this.todos;
-  }
-
   createList(item: Todo){
     const cloneItem = {...item};
-    item.id = ++this.next_id;
+    item.id = Math.random();
+
+    (this.todos === null)? this.todos = []:
+
     this.todos = [...this.todos, item];
     this._todo.next(this.todos);
+
     this.saveList();
   }
 

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServiceService} from "../service.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {Todo} from "../todo";
-import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-todos',
@@ -14,7 +13,6 @@ export class TodosComponent implements OnInit {
 
   formGroup: FormGroup;
   todos$?: Observable<Todo[]>
-  //private _todo = new BehaviorSubject<Todo[]>([])
 
   constructor(private formBuilder: FormBuilder, private todoService: ServiceService) {
     this.formGroup = this.formBuilder.group({
@@ -23,6 +21,9 @@ export class TodosComponent implements OnInit {
     })
   }
 
+  ngOnInit(): void {
+    this.todos$ = this.todoService.todos$;
+  }
 
   add(){
     this.todoService.createList(this.formGroup.value);
@@ -49,7 +50,4 @@ export class TodosComponent implements OnInit {
     this.todoService.showNotDone()
   }
 
-  ngOnInit(): void {
-
-  }
 }

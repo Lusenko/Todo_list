@@ -26,7 +26,10 @@ export class ServiceService {
     this.storageService.setData(storageKey, this.todos);
   }
 
-
+  returnTodoList(): Todo[]{
+    this._todo.next(this.todos);
+    return this.todos;
+  }
 
   createList(item: Todo){
     const cloneItem = {...item};

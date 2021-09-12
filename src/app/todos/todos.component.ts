@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ServiceService} from "../service.service";
+import {TodoService} from "../service/todo.service";
 import {Observable} from "rxjs";
-import {Todo} from "../todo";
+import {Todo} from "../interface/todo";
 
 @Component({
   selector: 'app-todos',
@@ -14,7 +14,7 @@ export class TodosComponent implements OnInit {
   formGroup: FormGroup;
   todos$?: Observable<Todo[]>
 
-  constructor(private formBuilder: FormBuilder, private todoService: ServiceService) {
+  constructor(private formBuilder: FormBuilder, private todoService: TodoService) {
     this.formGroup = this.formBuilder.group({
       check: [false],
       value: ['', Validators.required]
@@ -25,29 +25,28 @@ export class TodosComponent implements OnInit {
     this.todos$ = this.todoService.todos$;
   }
 
-  add(){
-    this.todoService.createList(this.formGroup.value);
-    this.formGroup.get('value')?.setValue('');
+  addItemToList(){
+    this.todoService.createElement(this.formGroup.value);
+    this.formGroup.reset();
   }
 
-  remove(todoId: number){
-    this.todoService.removeList(todoId);
+  removeItemToList(todoId: number){
+    this.todoService.removeElement(todoId);
   }
 
-  check(id: number){
-    this.todoService.checkList(id);
+  checkItemInList(id: number){
+    this.todoService.checkElement(id);
   }
 
   showAllItem(){
-    this.todoService.showAll()
+    this.todoService.showAllElement()
   }
 
   showDoneItem(){
-    this.todoService.showDone()
+    this.todoService.showDoneElement()
   }
 
   showNotDoneItem(){
-    this.todoService.showNotDone()
+    this.todoService.showNotDoneElement()
   }
-
 }

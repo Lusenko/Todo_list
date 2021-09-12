@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="formGroup">
     <h1>Todo</h1>
-    <input class="input-for-word" type="text"  name="value" formControlName="value" (keyup.enter)="add()">
+    <input class="input-for-word" type="text"  name="value" formControlName="value" (keyup.enter)="addItemToList()">
     <div class="block-with-radio">
       <label>
         <input type="radio" (click)="showAllItem()" name="show-item"> Show All
@@ -16,14 +16,14 @@
   </form>
   <div class="todo-list-container">
     <div *ngFor="let todo of (todos$ | async), let indexOfEl = index" class="todo-list">
-      <input type="checkbox" (click)="check(todo.id)" [checked]="todo.check">
+      <input type="checkbox" (click)="checkItemInList(todo.id)" [checked]="todo.checkValue">
       <div class="todo-list-id">
         {{indexOfEl+1}}
       </div>
-      <div class="todo-list-value" [ngClass]="{'todo-complete': todo.check}">
+      <div class="todo-list-value" [ngClass]="{'todo-complete': todo.checkValue}">
         : {{todo.value}}
       </div>
-      <button (click)="remove(todo.id)" class="remove-button">x</button>
+      <button (click)="removeItemToList(todo.id)" class="remove-button">x</button>
     </div>
   </div>
 </div>
